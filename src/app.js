@@ -1,33 +1,37 @@
 const express = require("express");
+const connectDB = require("./config/database");
 const app= express();
+const User = require("./models/user")
 
-app.get("/user", (req,res)=>{
-    res.send({firstName: "Aakash" , LastName : "Kumar"});
-})
 
-app.post("/user", (req,res)=>{
-    console.log("save data to the database");
-    res.send("Data saved successfully");
-})
+app.post("/signup", async (req,res)=>{
+    const user = new User({
+        firstName : "Aakash",
+        lastName : "kumar",
+        emailId : "fds",
+        password : "vfdsac",
+    })
 
-app.delete("/user", (req,res)=>{
-    res.send("Data delete successfully");
-})
+    try{
+        //this function returns a promise
+        await user.save();
+        res.send("user added successfully");
+    }
+    catch (err){
+        res.status(400).send("Error in saving the user : " + err.message);
+    }
 
-//use match all the http method APi call to /hello
-// app.use("/hello",(req,res)=>{
-//     res.send("hello hello hello");
-// });
-
-// app.use("/test",(req,res)=>{
-//     res.send("hello from the test");
-// });
-
-// //sequences of route matter, place this route always at the end else it will override other route
-// app.use("/",(req,res)=>{
-//     res.send("hello from the dashboard");
-// });
-
-app.listen(7777, ()=>{
-    console.log("server is listening");
 });
+
+
+connectDB().then(()=>{
+    console.log("Database connected Successfully");
+    // When the database is successfuly connected then only listen for request becuz api may contain some database operation
+    app.listen(7777, ()=>{
+        console.log("server is listening");
+    });
+}).catch(err=>{
+    console.log("Database Not Connect");
+});
+
+
