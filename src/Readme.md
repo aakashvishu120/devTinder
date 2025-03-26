@@ -60,8 +60,13 @@ http://localhost:7777/user?userId=102 => 102 is req.query
 - Create POST /signup api to add data to database
 - Push some socuments using API calls from postman
 - Error Handling using try catch
-
-
+- Js object vs JSON difference
+- server cannot read json need middleware to convert into json in post req.body
+- add the express.json middleware to your app
+- Make your signup api dynamic to receive data from the end user
+- User.findone with duplicate email ids which object returned
+- API - Get user by email
+- API - Feed API - Get /feed - get all the users from the database
 
 
 
