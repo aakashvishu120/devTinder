@@ -81,7 +81,10 @@ http://localhost:7777/user?userId=102 => 102 is req.query
 - Create a custom validate function for gender
 - Improve  the DB Schema -PUT all appropriate validations on each field in Schema
 - Add timestamps to the userSchema
-
+- Add Api level validation on patch request and signup post API
+- Data Sanitizing : Add Api validation for each field
+- Install validator
+- Explore Validator library function and Use validator function for password, email etc
 
 
 
