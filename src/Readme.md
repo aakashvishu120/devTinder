@@ -67,6 +67,20 @@ http://localhost:7777/user?userId=102 => 102 is req.query
 - User.findone with duplicate email ids which object returned
 - API - Get user by email
 - API - Feed API - Get /feed - get all the users from the database
+- API - Get iser by ID
+- Create a delete user API
+- Difference between patch and put
+- If i updata a field which is not present then monogodb ignore that field
+- API update a user
+- Explore the mongoose Documentation for Model methods
+- WHat are options in a model.findOneAndUpdate method, explore more about it
+- API update the user with email ID
+- Explore Schematype options from the documentation
+- Add required, unique, lowercase, min, minLength, trim
+- Add Default
+- Create a custom validate function for gender
+- Improve  the DB Schema -PUT all appropriate validations on each field in Schema
+- Add timestamps to the userSchema
 
 
 
