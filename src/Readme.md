@@ -109,7 +109,10 @@ http://localhost:7777/user?userId=102 => 102 is req.query
 - Explore tinder APIs
 - Create a list of all API you can think of Dev Tinder
 - Group multiple routes under respective routers
-
+- Read documentation for express.router
+- Create routes folder for managing auth, profile, request routers
+- Create authRouter, profileRouter, requestRouter
+- Import these routers in app.js
 
 
 
