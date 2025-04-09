@@ -85,6 +85,32 @@ http://localhost:7777/user?userId=102 => 102 is req.query
 - Data Sanitizing : Add Api validation for each field
 - Install validator
 - Explore Validator library function and Use validator function for password, email etc
+- Never trust req.body
+
+
+- Validate data in SignUP API
+- Install bcrypt package
+- Create PasswordHash using bcrypt.hash & save the user with encrypted password
+- Create login APi
+- Compare password and throw errors if email or password is invalid
+
+- install cookie-parser
+- just send a dummy cookie to user
+- create a profile API and check if you get the cookie back 
+- install jsonwebtoken
+- In login API, after email and password validation, create a jwt token and send it to user in cookies
+- Read the cookies inside your profile API and find the loggedin user.
+- userAuth middleware
+- Add the userauth middleware in profile AP and a new sendConnectionRequest API
+- Set the expiry of JWT token and cookies to 7 days
+- Create userSchema methoid to getJWT()
+- create userScheme method to compare password(passwordInputByUser)
+
+- Explore tinder APIs
+- Create a list of all API you can think of Dev Tinder
+- Group multiple routes under respective routers
+
+
 
 
 
@@ -150,3 +176,17 @@ app.use("/",(req,res)=>{
 
 When the database is successfuly connected then only listen for request becuz api may contain some database operation
 
+
+
+
+
+Salaries : 
+empid integer
+salary float
+monthYear YY-MM
+
+second hightst avg salry of 3 month
+resut :  empid salry
+
+
+select AVG()  empid  , salry from salries where salary < (select Max(salary) from Salaries) LIMIT 3
