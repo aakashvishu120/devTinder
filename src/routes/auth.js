@@ -8,7 +8,6 @@ const bcrypt = require("bcrypt");
 
 
 authRouter.post("/signup", async (req,res)=>{
-    console.log(req.body);
     const { firstName, lastName, emailId, password } = req.body;
 
     try{
@@ -67,5 +66,12 @@ authRouter.post("/login", async (req,res)=>{
     }
 });
 
+//we dont have to check that user is loggedIn or Auth
+authRouter.post("/logout", async (req,res)=>{
+    res.cookie("token", null , {
+        expires: new Date(Date.now()),
+    });
+    res.send("Logout SuccessFull !!!");
+});
 
 module.exports = authRouter;

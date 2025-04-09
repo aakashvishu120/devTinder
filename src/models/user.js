@@ -24,11 +24,15 @@ const userSchema = new mongoose.Schema({
     age: { type: Number, min: 18, max: 100 },
     gender: {
         type: String,
-        validate(value) {
-            if (!["male", "female", "others"].includes(value)) {
-                throw new Error("Gender Data is not valid");
-            }
-        }
+        enum : {
+            values : ["male", "female",  "other"],
+            message : `{VALUE} is not a valid gender type`
+        },
+        // validate(value) {
+        //     if (!["male", "female", "others"].includes(value)) {
+        //         throw new Error("Gender Data is not valid");
+        //     }
+        // }
     },
     photoUrl: { type: String, default: "https://t4.ftcdn.net/jpg/02/44/43/69/360_F_244436923_vkMe10KKKiw5bjhZeRDT05moxWcPpdmb.jpg" , 
         validate(value){

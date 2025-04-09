@@ -3,7 +3,6 @@ app.get("/user", async (req,res)=>{
     const userEmail = req.body.emailId;
     try{
         const user = await User.findOne({emailId : userEmail});
-        // console.log(user);
         if(!user){
             res.status(404).send("user not found");
         }

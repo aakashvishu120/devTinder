@@ -113,7 +113,21 @@ http://localhost:7777/user?userId=102 => 102 is req.query
 - Create routes folder for managing auth, profile, request routers
 - Create authRouter, profileRouter, requestRouter
 - Import these routers in app.js
+- Create POST /logout API
+- Create Patch /profile/edit
+- Create Patch /profile/password API => forgot password API
+- Make Sure validate all data in every POST, PATCH APIs
 
+- create connection request Schema
+- Send connection Request APIs
+- Proper validation of Data
+- Think about all corner cases
+- $or query and $and queries
+- Schema.pre("save") function
+- in model unique : true means that they are indexed and querying will be faster
+- why do we need index in DB
+- What is the advantage and disaadvantages of creating ?
+- Read article about compound index
 
 
 
