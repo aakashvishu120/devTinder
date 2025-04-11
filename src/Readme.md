@@ -133,8 +133,20 @@ http://localhost:7777/user?userId=102 => 102 is req.query
 - Write code with proper validation for POST /request/review/accepted/67f67ee13c6a0a2ddc2b6116
 - Thought Process - POST vs GET
 - Read about ref and populate
-- Create GET /requests/received
+- Create GET /requests/received with all the checks
+- create GET /user/connection
 - Always compare 2 mongoDb id using equal function or convert it into string toString()
+
+- Logic for GET /feed API
+- Explore the $nin, $and, $ne and others
+- Pagination  
+
+/feed?page=1&limit=10 => 1-10   => skip(0)  & limit(10)
+/feed?page=2&limit=10 => 11-20  => skip(10) & limit(10)
+/feed?page=3&limit=10 => 21-30  => skip(20) & limit(10)
+
+skip = (page- 1) * 10
+
 
 
 

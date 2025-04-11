@@ -1,6 +1,7 @@
 const express = require('express');
 const { userAuth } = require('../middlewares/auth');
 const connectionRequestModel = require('../models/connectionRequest');
+const user = require('../models/user');
 const userRouter = express.Router();
 const USER_SAFE_DATA = "firstName lastName photoUrl age gender about skills";
 
@@ -18,7 +19,7 @@ userRouter.get("/user/requests/received", userAuth, async (req , res) => {
         res.json({message : "Data Fetch Successfully", data : connectionRequests});
     }
     catch (err){
-        req.statusCode(400).send("Error : " + err.message);
+        res.status(400).send("Error : " + err.message);
     }
 }); 
 
@@ -63,7 +64,51 @@ userRouter.get("/user/connections", userAuth, async (req , res) =>
 
     }
     catch(err){
-        req.statusCode(400).send("Error : " + err.message);
+        res.status(400).send("Error : " + err.message);
+    }
+});
+
+
+
+userRouter.get("/feed", userAuth, async (req , res) => 
+{
+    try{
+        const loggedInUser = req.user;
+        const page = parseInt(req.query.page) || 1;
+        let limit = parseInt(req.query.limit) || 10;
+        limit = limit > 50 ? 50 : limit;
+        const skip = (page-1) * limit;
+
+        
+        //User should see all the user card except : 
+        // 1 his own card
+        // 2 His connection 
+        // 3 Already ignored profile
+        // 4 already sent the connection request
+        
+        //Find all connectionn request (sent + received) and these are those people who has exclude in feed
+        const connectionRequest = await connectionRequestModel.find({
+            $or : [
+                {fromUserId : loggedInUser._id},
+                {toUserId : loggedInUser._id}
+            ]
+        }).select("fromUserId toUserId");
+
+        const hideUsersFromFeed = new Set();
+        connectionRequest.forEach((req) => {
+            hideUsersFromFeed.add(req.fromUserId.toString());
+            hideUsersFromFeed.add(req.toUserId.toString());
+        });
+
+        // console.log("hideUsersFromFeed" , hideUsersFromFeed);
+        const users = await user.find({
+            _id : {$nin : Array.from(hideUsersFromFeed)}
+        }).select(USER_SAFE_DATA).skip(skip).limit(limit);
+
+        res.json({data : users});
+    }
+    catch(err){
+        res.status(400).send("Error : " + err.message);
     }
 });
 
