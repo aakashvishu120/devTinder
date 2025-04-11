@@ -128,7 +128,13 @@ http://localhost:7777/user?userId=102 => 102 is req.query
 - why do we need index in DB
 - What is the advantage and disaadvantages of creating ?
 - Read article about compound index
+- Always think about corner cases
 
+- Write code with proper validation for POST /request/review/accepted/67f67ee13c6a0a2ddc2b6116
+- Thought Process - POST vs GET
+- Read about ref and populate
+- Create GET /requests/received
+- Always compare 2 mongoDb id using equal function or convert it into string toString()
 
 
 
