@@ -147,6 +147,8 @@ http://localhost:7777/user?userId=102 => 102 is req.query
 
 skip = (page- 1) * 10
 
+- install cors
+
 
 
 

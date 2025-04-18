@@ -27,8 +27,10 @@ authRouter.post("/signup", async (req,res)=>{
     });
 
         //this function returns a promise
-        await user.save();
-        res.send("user added successfully");
+        const savedUser = await user.save();
+        const token = await savedUser.getJWT();
+        res.cookie("token", token);
+        res.json({message : "user added successfully", data :savedUser });
     }
     catch (err){
         res.status(400).send("Error in saving the user : " + err.message);
@@ -51,10 +53,14 @@ authRouter.post("/login", async (req,res)=>{
         if(isPasswordValid){
             //calling schemma method to get the JWT token
             const token = await user.getJWT();
+            const option = {
+                 httpOnly: true
+            };
+
             
             //Add the token to cookies and send the response back to the user
             res.cookie("token", token);
-            res.send("Login Successfull");
+            res.send(user);
         }
         else{
             res.status(401).send("Invalid Password");
@@ -62,7 +68,7 @@ authRouter.post("/login", async (req,res)=>{
 
     }
     catch (err){
-        res.status(400).send("Error in login API : " + err.message);
+        res.status(400).send("Error in login : " + err.message);
     }
 });
 
