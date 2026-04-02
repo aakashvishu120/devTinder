@@ -2,6 +2,8 @@ const express = require('express');
 const profileRouter = express.Router();
 const {userAuth} = require("../middlewares/auth");
 const {validateEditProfileData} = require("../utils/validation")
+const { upload } = require("../config/cloudinary");
+
 
 
 
@@ -39,6 +41,17 @@ profileRouter.patch("/profile/edit" ,userAuth , async (req,res)=>{
     }
     catch(err){
         res.status(400).send("Error : " + err.message);
+    }
+});
+
+profileRouter.post("/profile/upload-photo", userAuth, upload.single("photo"), async (req, res) => {
+    try {
+        const user = req.user;
+        user.photoUrl = req.file.path;
+        await user.save();
+        res.json({ message: "Photo uploaded", photoUrl: req.file.path });
+    } catch (err) {
+        res.status(400).send("Error: " + err.message);
     }
 });
 

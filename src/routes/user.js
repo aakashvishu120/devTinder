@@ -4,6 +4,8 @@ const connectionRequestModel = require('../models/connectionRequest');
 const user = require('../models/user');
 const userRouter = express.Router();
 const USER_SAFE_DATA = "firstName lastName photoUrl age gender about skills";
+const Message = require("../models/message");
+
 
 //get all the pending connection request for the loggedIn user
 userRouter.get("/user/requests/received", userAuth, async (req , res) => {
@@ -109,6 +111,33 @@ userRouter.get("/feed", userAuth, async (req , res) =>
     }
     catch(err){
         res.status(400).send("Error : " + err.message);
+    }
+});
+
+userRouter.get("/chat/:targetUserId", userAuth, async (req, res) => {
+    try {
+        const { targetUserId } = req.params;
+        const messages = await Message.find({
+            $or: [
+                { senderId: req.user._id, receiverId: targetUserId },
+                { senderId: targetUserId, receiverId: req.user._id }
+            ]
+        }).sort({ createdAt: 1 }).limit(50);
+        res.json({ data: messages });
+    } catch (err) {
+        res.status(400).send("Error: " + err.message);
+    }
+});
+
+userRouter.get("/user/notifications", userAuth, async (req, res) => {
+    try {
+        const pendingRequests = await connectionRequestModel.countDocuments({
+            toUserId: req.user._id,
+            status: "interested"
+        });
+        res.json({ pendingRequests });
+    } catch (err) {
+        res.status(400).send("Error: " + err.message);
     }
 });
 
