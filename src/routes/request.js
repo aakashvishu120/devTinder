@@ -33,6 +33,7 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res)
         });
 
         if(existingConnectionRequest){
+                console.log("DUPLICATE FOUND:", existingConnectionRequest);
             return res.status(400).send({message : "Connection Request Already Exists !!"});
         }
 

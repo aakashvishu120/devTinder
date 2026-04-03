@@ -103,8 +103,12 @@ userRouter.get("/feed", userAuth, async (req , res) =>
         });
 
         // console.log("hideUsersFromFeed" , hideUsersFromFeed);
+        // const users = await user.find({
+        //     _id : {$nin : Array.from(hideUsersFromFeed)}
+        // }).select(USER_SAFE_DATA).skip(skip).limit(limit);
+
         const users = await user.find({
-            _id : {$nin : Array.from(hideUsersFromFeed)}
+            _id : {$nin : [...Array.from(hideUsersFromFeed), loggedInUser._id]}
         }).select(USER_SAFE_DATA).skip(skip).limit(limit);
 
         res.json({data : users});

@@ -10,8 +10,16 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
     cloudinary,
-    params: { folder: 'devtinder', allowed_formats: ['jpg', 'png', 'jpeg'] }
+    params: {
+        folder: 'devtinder',
+        allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+        transformation: [{ width: 500, height: 500, crop: 'fill', gravity: 'face' }]
+    }
 });
 
-const upload = multer({ storage });
+const upload = multer({ 
+    storage,
+    limits: { fileSize: 5 * 1024 * 1024 } // 5MB max
+});
+
 module.exports = { upload, cloudinary };
